@@ -7,12 +7,13 @@ public class Tower {
 
     public static final Tower[] towerList = new Tower[200];
 
-    public static final  Tower lightningTower = new TowerLightning(0, 0).getTextureFile("res\\tower\\lightningTower.jpg");
+    public static final  Tower lightningTower = new TowerLightning(0, 10, 2).getTextureFile("res\\tower\\lightningTower.jpg");
 
-    public  int id;
+    public int id;
     public int cost;
+    public int range;
 
-    public Tower(int id, int cost){
+    public Tower(int id, int cost, int range){
         if (towerList[id] != null){
             System.out.println("[TowerInitialization] Two towers with same id: id=" + id);
         } else {
@@ -20,6 +21,7 @@ public class Tower {
 
             this.id = id;
             this.cost = cost;
+            this.range = range;
         }
     }
 
