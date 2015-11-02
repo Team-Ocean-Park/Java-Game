@@ -23,7 +23,7 @@ public class Screen extends JPanel implements Runnable{
 
     public  boolean running = false;
 
-    public double towerSize;
+    public static double towerSize;
 
     public int frameWidth;
     public int frameHeight;
@@ -34,7 +34,10 @@ public class Screen extends JPanel implements Runnable{
     public  Tower[][] towerMap = new Tower[22][14];
     public  Image[] terrain = new Image[100];
 
-    private String packageName = "res\\";
+    public EnemyMove[] enemyMap = new EnemyMove[200];
+    private int enemies=0;
+
+    private String packageName = "res\\";   //ver 2: packageName = "net\\";
 
 
     public Screen(Frame frame){
