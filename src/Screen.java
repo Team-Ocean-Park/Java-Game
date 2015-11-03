@@ -11,6 +11,7 @@ public class Screen extends JPanel implements Runnable{
     Frame frame;
     Levels level;
     LevelFile levelFile;
+    Wave wave;
 
     User user; //account
 
@@ -77,6 +78,13 @@ public class Screen extends JPanel implements Runnable{
                 for (int y = 0; y <  14; y++) {
                     g.drawImage(terrain[map[x][y]], (int) towerSize + (x *(int)towerSize),(int) towerSize + (x *(int)towerSize) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
                     g.drawRect((int) ((int) towerSize + (x * towerSize)), (int) ((int)towerSize + ( y * towerSize))  + frameHeightBorder, (int) towerSize, (int) towerSize);
+                }
+            }
+
+        //Enemies
+            for (int i = 0; i <enemyMap.length; i++) {
+                if (enemyMap[i] != null){
+                    g.drawImage(enemyMap[i].enemy.texture, (int) enemyMap[i].xPos + (int) towerSize,(int) enemyMap[i].yPos + (int) towerSize + frameHeightBorder, (int) towerSize, (int) towerSize, null);
                 }
             }
         //health and money
@@ -146,6 +154,7 @@ public class Screen extends JPanel implements Runnable{
     public void loadGame(){
         user = new User(this);
         levelFile = new LevelFile();
+        wave = new Wave(this);
 
         for (int y = 0; y < 10 ; y++) {
             for (int x = 0; x < 10; x++) {
@@ -156,6 +165,8 @@ public class Screen extends JPanel implements Runnable{
         running = true;
     }
 
+
+    //each time you start a level
     public void startGame(User user, String level){
         user.createPlayer();
 
@@ -164,6 +175,7 @@ public class Screen extends JPanel implements Runnable{
         this.map = this.level.map;
 
         this.scene = 1; //level 1
+        this.wave.waveNumber = 0;
     }
 
     public void run(){
@@ -192,6 +204,16 @@ public class Screen extends JPanel implements Runnable{
         }
         System.exit(0);
     }
+
+    public  void spawnEnemy(){
+        for (int i = 0; i < enemyMap.length; i++) {
+            if(enemyMap[i] == null){
+                enemyMap[i] = new EnemyMove(Enemy.enemyList[0], level.spawnPoint);
+                break;
+            }
+        }
+    }
+
 
     public void placeTower(int x, int y) {
         int xPos = x / (int) towerSize;

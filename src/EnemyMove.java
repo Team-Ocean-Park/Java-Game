@@ -1,4 +1,3 @@
-//package net.scratchforfun.towerdefence;
 public class EnemyMove {
 
     Enemy enemy;
