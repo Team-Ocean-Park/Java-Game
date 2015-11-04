@@ -183,9 +183,9 @@ public class Screen extends JPanel implements Runnable{
     }
 
     public void run(){
-
         long lastFrame = System.currentTimeMillis();
         int frames = 0;
+        int synchronised_fps = 0;
 
         loadGame();
 
@@ -200,7 +200,28 @@ public class Screen extends JPanel implements Runnable{
                 lastFrame = System.currentTimeMillis();
             }
 
-            update();
+            if (System.currentTimeMillis() / 30 > 1000 / 30){
+
+            }
+
+            double time = (double)System.currentTimeMillis() / 1000;
+
+            int timeMilliSec = (int) Math.round((time - (int)time) * 1000);
+
+
+
+            if (timeMilliSec > synchronised_fps * 1000 / 25 ){
+                synchronised_fps++;
+                update();
+                
+                if (synchronised_fps == 1000/25){
+                    synchronised_fps = 0;
+                }
+            }
+
+            if (timeMilliSec + 1000/25 < synchronised_fps * 1000 / 25){
+                synchronised_fps = 0;
+            }
 
             try {
                 Thread.sleep(1);
