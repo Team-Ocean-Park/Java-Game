@@ -232,16 +232,56 @@ public class Screen extends JPanel implements Runnable{
         for (int i = 0; i < enemyMap.length; i++) {
             if (enemyMap[i] != null){
                 if (!enemyMap[i].attack){
-                    EnemyAI.moveAI.move(enemyMap[i]);
+                    EnemyAI.moveAI.move(enemyMap[i]); //currently only to check if
                 }
 
-                enemyMap[i].update();
+                enemyMap[i] = enemyMap[i].update();
+            }
+        }
+    }
+
+    public void towerUpdate(){
+        for (int x = 0; x < 22; x++) {
+            for (int y = 0; y < 14; y++) {
+                if (towerMap[x][y] != null){
+                    towerAttack(x, y);
+                }
+            }
+        }
+    }
+
+    public void towerAttack(int x, int y){
+        if (this.towerMap[x][y].target == null){
+            //find a target for our tower
+            if (this.towerMap[x][y].attackDelay > this.towerMap[x][y].maxAttackDelay){
+                EnemyMove currentEnemy = this.towerMap[x][y].calculateEnemy(enemyMap, x, y);
+
+                if (currentEnemy != null){
+                    currentEnemy.health -= this.towerMap[x][y].damage;
+
+                    this.towerMap[x][y].target = currentEnemy;
+                    this.towerMap[x][y].attackTime = 0;
+                    this.towerMap[x][y].attackDelay = 0;
+
+                    System.out.println("[Tower] enemy attacked! health: " + currentEnemy.health);
+                    System.out.println(" X: " + x + " Y: " + y);
+                }
+            }else {
+                this.towerMap[x][y].attackDelay+=1;
+            }
+        }else {
+            if (this.towerMap[x][y].attackTime < this.towerMap[x][y].maxAttackTime){
+                this.towerMap[x][y].attackTime += 0.001;
+            }else   {
+                this.towerMap[x][y] = null;
             }
         }
     }
 
     public void update(){
         enemyUpdate();
+        towerUpdate();
+
 
         if (wave.waveSpawning){
             wave.spawnEnemies();
