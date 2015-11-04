@@ -15,7 +15,7 @@ public class Enemy {
     public int price;
     public double speed;
     public double attackSpeed;
-    public  int damage;
+    public int damage;
     public int health;
 
     public Enemy(int id ,int price , int damage, int health ,double speed, double attackSpeed){

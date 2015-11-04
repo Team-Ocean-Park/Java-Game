@@ -11,12 +11,14 @@ public class Screen extends JPanel implements Runnable{
     Frame frame;
     Levels level;
     LevelFile levelFile;
+    EnemyAI enemyAI;
     Wave wave;
 
     User user; //account
 
     private int fps = 0;
-    public int scene = 0;
+
+    public int scene;
 
     public int hand = 0;
     public int handXPos = 0;
@@ -38,7 +40,7 @@ public class Screen extends JPanel implements Runnable{
     public EnemyMove[] enemyMap = new EnemyMove[200];
     private int enemies=0;
 
-    private String packageName = "res\\";   //ver 2: packageName = "net\\";
+    private String packageName = "res\\terrain\\";   //ver 2: packageName = "net\\";
 
 
     public Screen(Frame frame){
@@ -174,6 +176,8 @@ public class Screen extends JPanel implements Runnable{
         this.level.findSpawnPoint();
         this.map = this.level.map;
 
+        this.enemyAI = new EnemyAI(this.level);
+
         this.scene = 1; //level 1
         this.wave.waveNumber = 0;
     }
@@ -196,6 +200,8 @@ public class Screen extends JPanel implements Runnable{
                 lastFrame = System.currentTimeMillis();
             }
 
+            update();
+
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e){
@@ -203,6 +209,26 @@ public class Screen extends JPanel implements Runnable{
             }
         }
         System.exit(0);
+    }
+
+    public void enemyUpdate(){
+        for (int i = 0; i < enemyMap.length; i++) {
+            if (enemyMap[i] != null){
+                if (!enemyMap[i].attack){
+                    EnemyAI.moveAI.move(enemyMap[i]);
+                }
+
+                enemyMap[i].update();
+            }
+        }
+    }
+
+    public void update(){
+        enemyUpdate();
+
+        if (wave.waveSpawning){
+            wave.spawnEnemies();
+        }
     }
 
     public  void spawnEnemy(){
@@ -280,7 +306,7 @@ public class Screen extends JPanel implements Runnable{
         }
 
         public void keySPACE() {
-           startGame(user, "Level1");
+           startGame(user, "level1");
         }
     }
 
