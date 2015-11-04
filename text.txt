@@ -1,6 +1,1 @@
-1. Enemies - assets
-2. Towers - assets
-3. States - main menu state, pause menu state, settings state
-4. Button for an extra speed (normally 1x, the speed can be changed up to Yx)
-5. Music - mute button!!!
-6. Logo
+initial commit
