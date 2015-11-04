@@ -2,9 +2,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-/**
- * Created by asus on 01/11/2015.
- */
 public class MouseHandler implements MouseListener, MouseMotionListener {
     private Screen screen;
     private Screen.MouseHeld mouseHeld;

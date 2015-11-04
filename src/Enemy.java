@@ -1,14 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
-//package net.scratchforfun.towerdefence;
 public class Enemy {
 
     public static final Enemy[]enemyList = new Enemy[200];
 
     public static final Enemy slime = new EnemySlime(0, 5 , 2 ,10 ,3 , 4).getTextureFile("EnemySlime.png");
 
-    public String textureFile = "";
+    public String textureFile = "enemy.jpg";
     public Image texture = null;
 
     public int id;

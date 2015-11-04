@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Tower {
+public class Tower implements Cloneable{
     public String textureFile = "";
     public Image texture;
 
@@ -23,6 +23,16 @@ public class Tower {
             this.cost = cost;
             this.range = range;
         }
+    }
+
+    protected Object clone(){
+        try {
+            return  super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public  Tower getTextureFile(String str){

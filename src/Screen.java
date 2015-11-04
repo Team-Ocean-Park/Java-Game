@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
+import java.util.Random;
 
 public class Screen extends JPanel implements Runnable{
 
@@ -64,7 +65,7 @@ public class Screen extends JPanel implements Runnable{
         g.clearRect(0, 0, this.frame.getWidth(), this.frame.getHeight());
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0 + frameHeightBorder, this.frame.getWidth(), this.frame.getHeight());
+        g.fillRect(0, 0, this.frame.getWidth(), this.frame.getHeight());
 
         if (scene == 0){
             g.setColor(Color.BLUE);
@@ -78,7 +79,7 @@ public class Screen extends JPanel implements Runnable{
             g.setColor(Color.GRAY);
             for (int x = 0; x < 22; x++) {
                 for (int y = 0; y <  14; y++) {
-                    g.drawImage(terrain[map[x][y]], (int) towerSize + (x *(int)towerSize),(int) towerSize + (x *(int)towerSize) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
+                    g.drawImage(terrain[map[x][y]], (int) towerSize + (x *(int)towerSize),(int) towerSize + (y *(int)towerSize) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
                     g.drawRect((int) ((int) towerSize + (x * towerSize)), (int) ((int)towerSize + ( y * towerSize))  + frameHeightBorder, (int) towerSize, (int) towerSize);
                 }
             }
@@ -96,7 +97,7 @@ public class Screen extends JPanel implements Runnable{
             g.drawRect(12, (15*(int) towerSize) + 12 + ((this.frameHeight - (15*(int) towerSize) - 12 - 12)/3) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
             g.drawString("Money: " + user.player.money, 12 + 25, (15*(int) towerSize) + 12 + 25 + (int) towerSize + frameHeightBorder);
 
-            g.drawRect(12, (15*(int) towerSize) + 12 + ((this.frameHeight - (15*(int) towerSize) - 12 - 12)/3) * 2 + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
+            g.drawRect(12, (15*(int) towerSize) + 12 + (((this.frameHeight - (15*(int) towerSize) - 12 - 12)/3) * 2) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
 
         //tower scroll list buttons
             g.drawRect(12 + 12 + (int)(frameWidth/ 11.52), (15*(int)towerSize) + 12 + frameHeightBorder, this.frameWidth / 40 , this.frameHeight - (15*(int)towerSize) - 12 - 12 );
@@ -200,20 +201,15 @@ public class Screen extends JPanel implements Runnable{
                 lastFrame = System.currentTimeMillis();
             }
 
-            if (System.currentTimeMillis() / 30 > 1000 / 30){
-
-            }
+            //if (System.currentTimeMillis() / 30 > 1000 / 30)
 
             double time = (double)System.currentTimeMillis() / 1000;
-
             int timeMilliSec = (int) Math.round((time - (int)time) * 1000);
-
-
 
             if (timeMilliSec > synchronised_fps * 1000 / 25 ){
                 synchronised_fps++;
                 update();
-                
+
                 if (synchronised_fps == 1000/25){
                     synchronised_fps = 0;
                 }
@@ -273,7 +269,8 @@ public class Screen extends JPanel implements Runnable{
             if (towerMap[xPos][yPos] == null && map[xPos][yPos] == 0) {
                 user.player.money -= Tower.towerList[hand - 1].cost;
 
-                towerMap[xPos][yPos] = Tower.towerList[hand - 1];
+                towerMap[xPos][yPos] = (Tower) Tower.towerList[hand - 1].clone();
+                towerMap[xPos][yPos].range = new Random().nextInt(2) +2;
             }
         }
     }
