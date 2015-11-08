@@ -2,7 +2,7 @@
 public class EnemySlime extends Enemy {
 
 
-    public EnemySlime(int id, int price, int damage, int health, double speed, double attackSpeed) {
-        super(id ,price , damage ,health ,speed ,attackSpeed);
+    public EnemySlime(int id, int price, int damage, int health,int point, double speed, double attackSpeed) {
+        super(id ,price , damage ,health, point ,speed ,attackSpeed);
     }
 }

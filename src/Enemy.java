@@ -3,12 +3,17 @@ import java.awt.*;
 
 public class Enemy {
 
-    public static final Enemy[]enemyList = new Enemy[200];
+    public static final Enemy[]enemyList = new Enemy[10];
 
-    public static final Enemy slime = new EnemySlime(0, 5 , 2 ,10 ,3 , 4).getTextureFile("EnemySlime.png");
+    public static final Enemy slimeYellow = new EnemySlime(0, 5 , 2 ,4 , 1,3 , 5).getTextureFile("EnemySlime.png");
+    public static final Enemy slimeGreen = new EnemySlime(1, 5 , 5 ,10, 2 ,2 , 5).getTextureFile("EnemySlime2.png");
+    public static final Enemy slimeBlue = new EnemySlime(2, 5 , 10 ,17, 5 ,1 , 6).getTextureFile("EnemySlime3.png");
+    public static final Enemy slimeink = new EnemySlime(3, 5 , 20 ,15, 10 ,1 , 7).getTextureFile("EnemySlime4.png");
 
-    public String textureFile = "enemy.jpg";
+    public String textureFile = "";
     public Image texture = null;
+
+
 
     public int id;
     public int price;
@@ -16,8 +21,9 @@ public class Enemy {
     public double attackSpeed;
     public int damage;
     public int health;
+    public int points;//How much is this enemy worth? When spawning?Level must be over/(oe at)the amount of point to spawn
 
-    public Enemy(int id ,int price , int damage, int health ,double speed, double attackSpeed){
+    public Enemy(int id ,int price , int damage, int health,int points ,double speed, double attackSpeed){
         if(enemyList[id] != null ){
             System.out.println("[TowerInitialization] Two enemies with same id");
         }else{
@@ -27,6 +33,7 @@ public class Enemy {
             this.price = price;
             this.damage =damage;
             this.health = health;
+            this.points =points;
             this.speed = speed;
             this.attackSpeed = attackSpeed;
 

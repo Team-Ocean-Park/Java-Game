@@ -135,6 +135,13 @@ public class Screen extends JPanel implements Runnable{
                                 towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize,
                                 towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize);
                         g.drawImage(Tower.towerList[towerMap[x][y].id].texture, (int) towerSize + (x * (int)towerSize), (int) towerSize + (y * (int) towerSize)+ frameHeightBorder, (int) towerSize, (int) towerSize, null);
+                        if(towerMap[x][y].target!=null){
+                            g.setColor(Color.RED);
+                            g.drawLine( (int) towerSize + (x * (int)towerSize)+(int)towerSize/2,
+                                        (int) towerSize + (y * (int) towerSize)+ frameHeightBorder+(int)towerSize/2,
+                                        (int) towerSize + (int)towerMap[x][y].target.xPos+(int)towerSize/2,
+                                        (int) towerSize + (int)towerMap[x][y].target.yPos+frameHeightBorder+(int)towerSize/2   );
+                        }
                     }
                 }
             }
@@ -177,7 +184,7 @@ public class Screen extends JPanel implements Runnable{
         this.level.findSpawnPoint();
         this.map = this.level.map;
 
-        this.enemyAI = new EnemyAI(this.level);
+       this.enemyAI = new EnemyAI(this.level);
 
         this.scene = 1; //level 1
         this.wave.waveNumber = 0;
@@ -232,7 +239,7 @@ public class Screen extends JPanel implements Runnable{
         for (int i = 0; i < enemyMap.length; i++) {
             if (enemyMap[i] != null){
                 if (!enemyMap[i].attack){
-                    EnemyAI.moveAI.move(enemyMap[i]); //currently only to check if
+                     EnemyAI.moveAI.move(enemyMap[i]); //currently only to check if
                 }
 
                 enemyMap[i] = enemyMap[i].update();
@@ -288,10 +295,10 @@ public class Screen extends JPanel implements Runnable{
         }
     }
 
-    public  void spawnEnemy(){
+    public  void spawnEnemy(int enemyID){
         for (int i = 0; i < enemyMap.length; i++) {
             if(enemyMap[i] == null){
-                enemyMap[i] = new EnemyMove(Enemy.enemyList[0], level.spawnPoint);
+                enemyMap[i] = new EnemyMove(Enemy.enemyList[enemyID], level.spawnPoint);
                 break;
             }
         }
@@ -330,16 +337,19 @@ public class Screen extends JPanel implements Runnable{
                             && e.getXOnScreen() <= ((int)12 + 12 + (int) (frameWidth / 11.52)+ frameWidth / 40 + 12 + (18* towerSize))){
                         if (e.getYOnScreen() >= (15 * (int) towerSize) + 12 + frameHeightBorder
                                 && e.getYOnScreen() <= (15 * (int) towerSize) + 12 + (int) towerSize * 2 + frameHeightBorder){
-                            //Tower 1
-                            if (e.getXOnScreen() >= ((int) (12 + 12 + (int)(frameWidth/ 11.52) + frameWidth/40 + 12))
-                                    && e.getXOnScreen() <= ((int)12 + 12 + (int) (frameWidth / 11.52)+ frameWidth/ 40 + 12 + towerSize)
-                                    && e.getYOnScreen() >= (15 * (int) towerSize) + 12 + frameHeightBorder
-                                    && e.getYOnScreen() <= (15 * (int) towerSize) + 12 + (int) towerSize + frameHeightBorder){
-                                if (user.player.money >= Tower.towerList[0].cost){
-                                    System.out.println("[SHOP] You bought a tower for " + Tower.towerList[0].cost + "!");
-                                    hand = 1;
-                                }
+                            for(int i=0;i<Tower.towerList.length;i++) {
+                                if (e.getXOnScreen() >= ((int) (12 + 12 + (int) (frameWidth / 11.52) + frameWidth / 40 + 12))+(int)(i/2)*(int)towerSize
+                                        && e.getXOnScreen() <= ((int)( 12 + 12 + (int) (frameWidth / 11.52) + frameWidth / 40 + 12 + towerSize))+(int)(i/2)*(int)towerSize
+                                        && e.getYOnScreen() >= (15 * (int) towerSize) + 12 + frameHeightBorder+(int)(i%2)*(int)towerSize
+                                        && e.getYOnScreen() <= (15 * (int) towerSize) + 12 + (int) towerSize + frameHeightBorder+(int)(i%2)*(int)towerSize) {
+                                    if (user.player.money >= Tower.towerList[i].cost) {
+                                        System.out.println("[SHOP] You bought a tower for " + Tower.towerList[i].cost + "!");
+                                        hand = i+1;
 
+                                        return;
+                                    }
+
+                                }
                             }
                         }
                     }
@@ -362,6 +372,8 @@ public class Screen extends JPanel implements Runnable{
         public  void keyESC(){
             running = false;
         }
+
+        public  void keyEnter(){wave.nextWave();}
 
         public void keySPACE() {
            startGame(user, "level1");

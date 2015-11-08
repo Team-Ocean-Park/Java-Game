@@ -29,6 +29,10 @@ public class KeyHandler implements KeyListener {
         if (keyCode == 32){
             this.keyTyped.keySPACE();
         }
+
+        if(keyCode == KeyEvent.VK_ENTER){
+            this.keyTyped.keyEnter();
+        }
     }
 
     @Override
