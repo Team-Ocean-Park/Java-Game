@@ -39,10 +39,9 @@ public class Screen extends JPanel implements Runnable{
     public  Image[] terrain = new Image[100];
 
     public EnemyMove[] enemyMap = new EnemyMove[200];
-    private int enemies=0;
+    private int enemies = 0;
 
     private String packageName = "res\\terrain\\";   //ver 2: packageName = "net\\";
-
 
     public Screen(Frame frame){
         this.frame = frame;
@@ -135,12 +134,16 @@ public class Screen extends JPanel implements Runnable{
                                 towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize,
                                 towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize);
                         g.drawImage(Tower.towerList[towerMap[x][y].id].texture, (int) towerSize + (x * (int)towerSize), (int) towerSize + (y * (int) towerSize)+ frameHeightBorder, (int) towerSize, (int) towerSize, null);
-                        if(towerMap[x][y].target!=null){
-                            g.setColor(Color.RED);
-                            g.drawLine( (int) towerSize + (x * (int)towerSize)+(int)towerSize/2,
-                                        (int) towerSize + (y * (int) towerSize)+ frameHeightBorder+(int)towerSize/2,
-                                        (int) towerSize + (int)towerMap[x][y].target.xPos+(int)towerSize/2,
-                                        (int) towerSize + (int)towerMap[x][y].target.yPos+frameHeightBorder+(int)towerSize/2   );
+
+                        //Attack Enemy
+                        if(towerMap[x][y].target != null) {
+                            if (towerMap[x][y] instanceof TowerLightning) {
+                                g.setColor(Color.RED);
+                                g.drawLine((int) towerSize + (x * (int) towerSize) + (int) towerSize / 2,
+                                        (int) towerSize + (y * (int) towerSize) + frameHeightBorder + (int) towerSize / 2,
+                                        (int) towerSize + (int) towerMap[x][y].target.xPos + (int) towerSize / 2,
+                                        (int) towerSize + (int) towerMap[x][y].target.yPos + frameHeightBorder + (int) towerSize / 2);
+                            }
                         }
                     }
                 }
@@ -158,6 +161,8 @@ public class Screen extends JPanel implements Runnable{
         //FPS at the bottom!
         g.setColor(Color.BLACK);
         g.drawString(fps + "", 10, 10 + frameHeightBorder);
+
+        frames++;
     }
 
     //only first time
@@ -189,10 +194,10 @@ public class Screen extends JPanel implements Runnable{
         this.scene = 1; //level 1
         this.wave.waveNumber = 0;
     }
-
+    int frames = 0;
     public void run(){
         long lastFrame = System.currentTimeMillis();
-        int frames = 0;
+
         int synchronised_fps = 0;
 
         loadGame();
@@ -200,7 +205,6 @@ public class Screen extends JPanel implements Runnable{
         while (running){
             repaint();
 
-            frames++;
 
             if (System.currentTimeMillis() - 1000 >= lastFrame){
                 fps = frames;

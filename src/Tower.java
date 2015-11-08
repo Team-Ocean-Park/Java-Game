@@ -8,10 +8,11 @@ public class Tower implements Cloneable{
 
     public static final Tower[] towerList = new Tower[36];
 
-    public static final  Tower lightningTowerYwllow = new TowerLightning(0, 10, 2, 4, 6, 9).getTextureFile("res\\tower\\lightningTower1.jpg");
-    public static final  Tower lightningTowerGreen = new TowerLightning(1, 25, 3, 6, 6, 15).getTextureFile("res\\tower\\lightningTower2.jpg");
-    public static final  Tower lightningTowerBlue = new TowerLightning(2, 50, 3, 6, 6, 12).getTextureFile("res\\tower\\lightningTower3.jpg");
-    public static final  Tower lightningTowerPink = new TowerLightning(3, 75, 4, 10, 9, 21).getTextureFile("res\\tower\\lightningTower4.jpg");
+    public static final Tower lightningTowerYellow = new TowerLightning(0, 10, 2, 4, 6, 9).getTextureFile("res\\tower\\lightningTower1.jpg");
+    public static final Tower lightningTowerGreen = new TowerLightning(1, 25, 3, 6, 6, 15).getTextureFile("res\\tower\\lightningTower2.jpg");
+    public static final Tower lightningTowerBlue = new TowerLightning(2, 50, 3, 6, 6, 12).getTextureFile("res\\tower\\lightningTower3.jpg");
+    public static final Tower lightningTowerPink = new TowerLightning(3, 75, 4, 10, 9, 21).getTextureFile("res\\tower\\lightningTower4.jpg");
+    public static final Tower missileTower = new TowerMissile(4, 10, 2, 3, 0, 17).getTextureFile("res\\tower\\missileTower.jpg");
 
     public int id;
     public int cost;
@@ -34,7 +35,7 @@ public class Tower implements Cloneable{
 
     public Tower(int id, int cost, int range, int damage, int maxAttackTime, int maxAttackDelay){
         if (towerList[id] != null){
-            System.out.println("[TowerInitialization] Two towers with same id: id=" + id);
+            System.out.println("[TowerInitialization] Two towers with same id! id=" + id);
         } else {
             towerList[id]  = this;
 
