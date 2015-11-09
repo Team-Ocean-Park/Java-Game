@@ -34,6 +34,8 @@ public class Screen extends JPanel implements Runnable{
 
     public int frameHeightBorder;
 
+    public Tower selectedTower;
+
     public  int[][] map = new int[22][14];
     public  Tower[][] towerMap = new Tower[22][14];
     public  Image[] terrain = new Image[100];
@@ -49,7 +51,7 @@ public class Screen extends JPanel implements Runnable{
         this.frame.addMouseMotionListener(new MouseHandler(this));
 
         frameWidth = this.frame.getWidth();
-        frameHeight = this.frame.getHeight() / 16 * 9;
+        frameHeight = this.frame.getWidth() / 16 * 9;
 
         frameHeightBorder = (this.frame.getHeight() - frameHeight) / 2;
 
@@ -88,32 +90,32 @@ public class Screen extends JPanel implements Runnable{
                 }
             }
             //health and money
-            g.drawRect(12, (15*(int) towerSize) + 12 + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
-            g.drawString("Health: " + user.player.health, 12 + 25, (15*(int) towerSize) + 12 + 25 + frameHeightBorder);
+            g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
+            g.drawString("Health: " + user.player.health, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25 + frameHeightBorder);
 
-            g.drawRect(12, (15*(int) towerSize) + 12 + ((this.frameHeight - (15*(int) towerSize) - 12 - 12)/3) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
-            g.drawString("Money: " + user.player.money, 12 + 25, (15*(int) towerSize) + 12 + 25 + (int) towerSize + frameHeightBorder);
+            g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + ((this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
+            g.drawString("Money: " + user.player.money, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25 + (int) towerSize + frameHeightBorder);
 
-            g.drawRect(12, (15*(int) towerSize) + 12 + (((this.frameHeight - (15*(int) towerSize) - 12 - 12)/3) * 2) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
+            g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + (((this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3) * 2) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
 
             //tower scroll list buttons
-            g.drawRect(12 + 12 + (int)(frameWidth/ 11.52), (15*(int)towerSize) + 12 + frameHeightBorder, this.frameWidth / 40 , this.frameHeight - (15*(int)towerSize) - 12 - 12 );
+            g.drawRect((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (int)(frameWidth/ 11.52), (15*(int)towerSize) + (int)(12* towerSize / 25) + frameHeightBorder, this.frameWidth / 40 , this.frameHeight - (15*(int)towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25) );
             //other button on the other side
 
             //tower list
             for (int x = 0; x < 18; x++) {
                 for (int y = 0; y < 2; y++) {
                     if (Tower.towerList[x * 2 + y] != null){
-                        g.drawImage(Tower.towerList[x * 2 + y].texture,(int) (12 + 12 + (frameWidth / 11.52) + this.frameWidth / 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
+                        g.drawImage(Tower.towerList[x * 2 + y].texture,(int) ((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (frameWidth / 11.52) + this.frameWidth / 40 + (int)(12* towerSize / 25) + (x * towerSize)), (int) ((15*towerSize) + (int)(12* towerSize / 25) + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
 
                         if (Tower.towerList[x * 2 + y].cost > this.user.player.money){
                             g.setColor(new Color(255, 0, 0, 100));
-                            g.fillRect((int) (12 + 12 + (frameWidth / 11.52) + this.frameWidth / 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize);
+                            g.fillRect((int) ((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (frameWidth / 11.52) + this.frameWidth / 40 + (int)(12* towerSize / 25) + (x * towerSize)), (int) ((15*towerSize) + (int)(12* towerSize / 25) + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize);
                         }
                     }
 
                     g.setColor(Color.GRAY);
-                    g.drawRect((int) (12 + 12 + (int)(frameWidth / 11.52) + this.frameWidth/ 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder,(int) towerSize, (int) towerSize);
+                    g.drawRect((int) ((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (int)(frameWidth / 11.52) + this.frameWidth/ 40 + (int)(12* towerSize / 25) + (x * towerSize)), (int) ((15*towerSize) + (int)(12* towerSize / 25) + (y * towerSize)) + frameHeightBorder,(int) towerSize, (int) towerSize);
                 }
             }
 
@@ -121,16 +123,19 @@ public class Screen extends JPanel implements Runnable{
             for (int x = 0; x < 22; x++) {
                 for (int y = 0; y < 14; y++) {
                     if (towerMap[x][y] != null){
-                        g.setColor(Color.GRAY);
-                        g.drawOval((int) towerSize + (x* (int) towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2,
-                                (int)towerSize + (y*(int)towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2 + frameHeightBorder,
-                                towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize,
-                                towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize);
-                        g.setColor(new Color(64, 64, 64, 64));
-                        g.fillOval((int) towerSize + (x* (int) towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize)/ 2 + (int) towerSize / 2,
-                                (int)towerSize + (y*(int)towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2 + frameHeightBorder,
-                                towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize,
-                                towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize);
+                        if (selectedTower == towerMap[x][y]) {
+                            g.setColor(Color.GRAY);
+                            g.drawOval((int) towerSize + (x * (int) towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2,
+                                    (int) towerSize + (y * (int) towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2 + frameHeightBorder,
+                                    towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize,
+                                    towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize);
+                            g.setColor(new Color(64, 64, 64, 64));
+                            g.fillOval((int) towerSize + (x * (int) towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2,
+                                    (int) towerSize + (y * (int) towerSize) - (towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize) / 2 + (int) towerSize / 2 + frameHeightBorder,
+                                    towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize,
+                                    towerMap[x][y].range * 2 * (int) towerSize + (int) towerSize);
+                        }
+
                         g.drawImage(Tower.towerList[towerMap[x][y].id].texture, (int) towerSize + (x * (int)towerSize), (int) towerSize + (y * (int) towerSize)+ frameHeightBorder, (int) towerSize, (int) towerSize, null);
 
                         //Attack Enemy
@@ -148,9 +153,12 @@ public class Screen extends JPanel implements Runnable{
             }
 
             //Missiles
+            Graphics2D g2d = (Graphics2D)g;
             for (int i = 0; i < missiles.length; i++) {
                 if (missiles[i] != null) {
-                    g.drawImage(missiles[i].texture, (int)missiles[i].x, (int)missiles[i].y, 14, 30, null);
+                    g2d.rotate(missiles[i].direction + Math.toRadians(90), (int)missiles[i].x + (int)towerSize + (int)towerSize/2, (int)missiles[i].y + (int)towerSize + (int)towerSize /2 + frameHeightBorder);
+                    g.drawImage(missiles[i].texture, (int)missiles[i].x + (int)towerSize + (int)towerSize / 2, (int)missiles[i].y + (int)towerSize + (int)towerSize / 2 + frameHeightBorder, (int)(14 * towerSize / 50), (int)(30 * towerSize / 50), null);
+                    g2d.rotate(-missiles[i].direction + Math.toRadians(-90), (int)missiles[i].x + (int)towerSize + (int)towerSize /2,(int)missiles[i].y + (int)towerSize + (int)towerSize / 2 + frameHeightBorder);
                 }
             }
 
@@ -341,7 +349,8 @@ public class Screen extends JPanel implements Runnable{
                 user.player.money -= Tower.towerList[hand - 1].cost;
 
                 towerMap[xPos][yPos] = (Tower) Tower.towerList[hand - 1].clone();
-                towerMap[xPos][yPos].range = new Random().nextInt(2) +2;
+                //towerMap[xPos][yPos].range = new Random().nextInt(2) +2;
+                selectedTower = towerMap[xPos][yPos];
             }
         }
     }
@@ -357,15 +366,15 @@ public class Screen extends JPanel implements Runnable{
         public  void  updateMouse(MouseEvent e){
             if (scene == 1){
                 if(mouseDown && hand == 0){
-                    if (e.getXOnScreen() >= ((int) (12 + 12 + (int)(frameWidth / 11.52) + frameWidth) / 40 + 12)
-                            && e.getXOnScreen() <= ((int)12 + 12 + (int) (frameWidth / 11.52)+ frameWidth / 40 + 12 + (18* towerSize))){
-                        if (e.getYOnScreen() >= (15 * (int) towerSize) + 12 + frameHeightBorder
+                    if (e.getXOnScreen() >= ((int) ((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (int)(frameWidth / 11.52) + frameWidth) / 40 + (int)(12* towerSize / 25))
+                            && e.getXOnScreen() <= ((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (int) (frameWidth / 11.52)+ frameWidth / 40 + (int)(12* towerSize / 25) + (18* towerSize))){
+                        if (e.getYOnScreen() >= (15 * (int) towerSize) + (int)(12* towerSize / 25) + frameHeightBorder
                                 && e.getYOnScreen() <= (15 * (int) towerSize) + 12 + (int) towerSize * 2 + frameHeightBorder){
                             for(int i=0;i<Tower.towerList.length;i++) {
-                                if (e.getXOnScreen() >= ((int) (12 + 12 + (int) (frameWidth / 11.52) + frameWidth / 40 + 12))+(int)(i/2)*(int)towerSize
-                                        && e.getXOnScreen() <= ((int)( 12 + 12 + (int) (frameWidth / 11.52) + frameWidth / 40 + 12 + towerSize))+(int)(i/2)*(int)towerSize
-                                        && e.getYOnScreen() >= (15 * (int) towerSize) + 12 + frameHeightBorder+(int)(i%2)*(int)towerSize
-                                        && e.getYOnScreen() <= (15 * (int) towerSize) + 12 + (int) towerSize + frameHeightBorder+(int)(i%2)*(int)towerSize) {
+                                if (e.getXOnScreen() >= ((int) ((int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (int) (frameWidth / 11.52) + frameWidth / 40 + (int)(12* towerSize / 25)))+(int)(i/2)*(int)towerSize
+                                        && e.getXOnScreen() <= ((int)( (int)(12* towerSize / 25) + (int)(12* towerSize / 25) + (int) (frameWidth / 11.52) + frameWidth / 40 + (int)(12* towerSize / 25) + towerSize))+(int)(i/2)*(int)towerSize
+                                        && e.getYOnScreen() >= (15 * (int) towerSize) + (int)(12* towerSize / 25) + frameHeightBorder+(int)(i%2)*(int)towerSize
+                                        && e.getYOnScreen() <= (15 * (int) towerSize) + (int)(12* towerSize / 25) + (int) towerSize + frameHeightBorder+(int)(i%2)*(int)towerSize) {
                                     if (user.player.money >= Tower.towerList[i].cost) {
                                         System.out.println("[SHOP] You bought a tower for " + Tower.towerList[i].cost + "!");
                                         hand = i+1;

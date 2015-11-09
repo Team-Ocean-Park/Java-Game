@@ -34,7 +34,7 @@ public class Enemy {
             this.damage =damage;
             this.health = health;
             this.points =points;
-            this.speed = speed;
+            this.speed = speed * Screen.towerSize / 50;
             this.attackSpeed = attackSpeed;
 
         }

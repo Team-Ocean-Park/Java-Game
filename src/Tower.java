@@ -1,13 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import java.util.Scanner;
 
 public abstract class Tower implements Cloneable{
     public String textureFile = "";
-    public Image texture;
+    public Image texture = null;
 
-    public static final Tower[] towerList = new Tower[36];
+    public static final Tower[] towerList = new Tower[200];
 
+    //public static Tower lightningTower = new TowerLightning(0, 10, 2, 4D, 1D).getTextureFile("lightningTower.png");
     public static final Tower lightningTowerYellow = new TowerLightning(0, 10, 2, 4, 6, 9).getTextureFile("res\\tower\\lightningTower1.jpg");
     public static final Tower lightningTowerGreen = new TowerLightning(1, 25, 3, 6, 6, 15).getTextureFile("res\\tower\\lightningTower2.jpg");
     public static final Tower lightningTowerBlue = new TowerLightning(2, 50, 3, 6, 6, 12).getTextureFile("res\\tower\\lightningTower3.jpg");
@@ -21,17 +23,21 @@ public abstract class Tower implements Cloneable{
     public int damage;
 
     public int attackTime; //(timer)how long do we want the laser/attack to stay on
-    public int attackDelay; //(timer) Pause between each attack
+    public int attackDelay; //(timer) Pause between each attack;
 
-    public int maxAttackTime;
-    public int maxAttackDelay;
+    public EnemyMove target;
 
     public int FIRST = 1; //attack enemy nearest based
     public int RANDOM = 2; //attack random enemy
 
     public int attackStrategy = RANDOM;
 
-    public EnemyMove target;
+    public int maxAttackTime;
+    public int maxAttackDelay;
+
+
+
+    public static Screen screen;
 
     public Tower(int id, int cost, int range, int damage, int maxAttackTime, int maxAttackDelay){
         if (towerList[id] != null){
