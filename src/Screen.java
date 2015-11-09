@@ -38,10 +38,8 @@ public class Screen extends JPanel implements Runnable{
     public  Tower[][] towerMap = new Tower[22][14];
     public  Image[] terrain = new Image[100];
 
-    public EnemyMove[] enemyMap = new EnemyMove[200];
-    private int enemies = 0;
-
-    private String packageName = "res\\terrain\\";   //ver 2: packageName = "net\\";
+    public EnemyMove[] enemyMap = new EnemyMove[50];
+    public static Missile[] missiles = new  Missile[10];
 
     public Screen(Frame frame){
         this.frame = frame;
@@ -83,13 +81,13 @@ public class Screen extends JPanel implements Runnable{
                 }
             }
 
-        //Enemies
+            //Enemies
             for (int i = 0; i <enemyMap.length; i++) {
                 if (enemyMap[i] != null){
                     g.drawImage(enemyMap[i].enemy.texture, (int) enemyMap[i].xPos + (int) towerSize,(int) enemyMap[i].yPos + (int) towerSize + frameHeightBorder, (int) towerSize, (int) towerSize, null);
                 }
             }
-        //health and money
+            //health and money
             g.drawRect(12, (15*(int) towerSize) + 12 + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
             g.drawString("Health: " + user.player.health, 12 + 25, (15*(int) towerSize) + 12 + 25 + frameHeightBorder);
 
@@ -98,28 +96,28 @@ public class Screen extends JPanel implements Runnable{
 
             g.drawRect(12, (15*(int) towerSize) + 12 + (((this.frameHeight - (15*(int) towerSize) - 12 - 12)/3) * 2) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - 12 - 12)/3);
 
-        //tower scroll list buttons
+            //tower scroll list buttons
             g.drawRect(12 + 12 + (int)(frameWidth/ 11.52), (15*(int)towerSize) + 12 + frameHeightBorder, this.frameWidth / 40 , this.frameHeight - (15*(int)towerSize) - 12 - 12 );
             //other button on the other side
-            
-        //tower list
-        for (int x = 0; x < 18; x++) {
-            for (int y = 0; y < 2; y++) {
-                if (Tower.towerList[x * 2 + y] != null){
-                    g.drawImage(Tower.towerList[x * 2 + y].texture,(int) (12 + 12 + (frameWidth / 11.52) + this.frameWidth / 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
 
-                    if (Tower.towerList[x * 2 + y].cost > this.user.player.money){
-                        g.setColor(new Color(255, 0, 0, 100));
-                        g.fillRect((int) (12 + 12 + (frameWidth / 11.52) + this.frameWidth / 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize);
+            //tower list
+            for (int x = 0; x < 18; x++) {
+                for (int y = 0; y < 2; y++) {
+                    if (Tower.towerList[x * 2 + y] != null){
+                        g.drawImage(Tower.towerList[x * 2 + y].texture,(int) (12 + 12 + (frameWidth / 11.52) + this.frameWidth / 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize, null);
+
+                        if (Tower.towerList[x * 2 + y].cost > this.user.player.money){
+                            g.setColor(new Color(255, 0, 0, 100));
+                            g.fillRect((int) (12 + 12 + (frameWidth / 11.52) + this.frameWidth / 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder, (int) towerSize, (int) towerSize);
+                        }
                     }
+
+                    g.setColor(Color.GRAY);
+                    g.drawRect((int) (12 + 12 + (int)(frameWidth / 11.52) + this.frameWidth/ 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder,(int) towerSize, (int) towerSize);
                 }
-
-                g.setColor(Color.GRAY);
-                g.drawRect((int) (12 + 12 + (int)(frameWidth / 11.52) + this.frameWidth/ 40 + 12 + (x * towerSize)), (int) ((15*towerSize) + 12 + (y * towerSize)) + frameHeightBorder,(int) towerSize, (int) towerSize);
             }
-        }
 
-        //Towers on grid
+            //Towers on grid
             for (int x = 0; x < 22; x++) {
                 for (int y = 0; y < 14; y++) {
                     if (towerMap[x][y] != null){
@@ -148,10 +146,18 @@ public class Screen extends JPanel implements Runnable{
                     }
                 }
             }
-        //Hand
-        if (hand != 0 && Tower.towerList[hand - 1] != null){
-            g.drawImage(Tower.towerList[hand - 1].texture, this.handXPos - (int)this.towerSize / 2,this.handYPos - (int)towerSize / 2, (int) this.towerSize, (int) this.towerSize, null);
-        }
+
+            //Missiles
+            for (int i = 0; i < missiles.length; i++) {
+                if (missiles[i] != null) {
+                    g.drawImage(missiles[i].texture, (int)missiles[i].x, (int)missiles[i].y, 14, 30, null);
+                }
+            }
+
+            //Hand
+            if (hand != 0 && Tower.towerList[hand - 1] != null){
+                g.drawImage(Tower.towerList[hand - 1].texture, this.handXPos - (int)this.towerSize / 2,this.handYPos - (int)towerSize / 2, (int) this.towerSize, (int) this.towerSize, null);
+            }
 
         } else {
             g.setColor(Color.WHITE);
@@ -173,10 +179,11 @@ public class Screen extends JPanel implements Runnable{
 
         for (int y = 0; y < 10 ; y++) {
             for (int x = 0; x < 10; x++) {
-                terrain[x + (y * 10)] = new ImageIcon(packageName + "terrain.png").getImage();
+                terrain[x + (y * 10)] = new ImageIcon("res/terrain/terrain.png").getImage();
                 terrain[x + (y * 10)] = createImage(new FilteredImageSource(terrain[x + (y * 10)].getSource(), new CropImageFilter(x*25, y*25, 25, 25)));
             }
         }
+
         running = true;
     }
 
@@ -189,7 +196,7 @@ public class Screen extends JPanel implements Runnable{
         this.level.findSpawnPoint();
         this.map = this.level.map;
 
-       this.enemyAI = new EnemyAI(this.level);
+        this.enemyAI = new EnemyAI(this.level);
 
         this.scene = 1; //level 1
         this.wave.waveNumber = 0;
@@ -243,7 +250,7 @@ public class Screen extends JPanel implements Runnable{
         for (int i = 0; i < enemyMap.length; i++) {
             if (enemyMap[i] != null){
                 if (!enemyMap[i].attack){
-                     EnemyAI.moveAI.move(enemyMap[i]); //currently only to check if
+                    EnemyAI.moveAI.move(enemyMap[i]); //currently only to check if
                 }
 
                 enemyMap[i] = enemyMap[i].update();
@@ -268,7 +275,7 @@ public class Screen extends JPanel implements Runnable{
                 EnemyMove currentEnemy = this.towerMap[x][y].calculateEnemy(enemyMap, x, y);
 
                 if (currentEnemy != null){
-                    currentEnemy.health -= this.towerMap[x][y].damage;
+                    this.towerMap[x][y].towerAttack(x, y, currentEnemy);
 
                     this.towerMap[x][y].target = currentEnemy;
                     this.towerMap[x][y].attackTime = 0;
@@ -278,13 +285,25 @@ public class Screen extends JPanel implements Runnable{
                     System.out.println(" X: " + x + " Y: " + y);
                 }
             }else {
-                this.towerMap[x][y].attackDelay+=1;
+                this.towerMap[x][y].attackDelay += 1;
             }
         }else {
             if (this.towerMap[x][y].attackTime < this.towerMap[x][y].maxAttackTime){
-                this.towerMap[x][y].attackTime += 0.001;
+                this.towerMap[x][y].attackTime += 1;
             }else   {
-                this.towerMap[x][y] = null;
+                this.towerMap[x][y].target = null;
+            }
+        }
+    }
+
+    public void missileUpdate() {
+        for (int i = 0; i < missiles.length; i++) {
+            if(missiles[i] != null) {
+                missiles[i].update();
+
+                if(missiles[i].target == null) {
+                    missiles[i] = null;
+                }
             }
         }
     }
@@ -292,6 +311,7 @@ public class Screen extends JPanel implements Runnable{
     public void update(){
         enemyUpdate();
         towerUpdate();
+        missileUpdate();
 
 
         if (wave.waveSpawning){
@@ -361,7 +381,7 @@ public class Screen extends JPanel implements Runnable{
             }
         }
         public void mouseDown(MouseEvent e) {
-             mouseDown = true;
+            mouseDown = true;
 
             if (hand != 0){
                 placeTower(e.getXOnScreen(), e.getYOnScreen()- frameHeightBorder);
@@ -380,7 +400,7 @@ public class Screen extends JPanel implements Runnable{
         public  void keyEnter(){wave.nextWave();}
 
         public void keySPACE() {
-           startGame(user, "level1");
+            startGame(user, "level1");
         }
     }
 

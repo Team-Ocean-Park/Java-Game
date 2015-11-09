@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Tower implements Cloneable{
+public abstract class Tower implements Cloneable{
     public String textureFile = "";
     public Image texture;
 
@@ -75,7 +75,7 @@ public class Tower implements Cloneable{
                 
                 int dradius = towerRadius + enemyRadius;
                 
-                if ((dx * dx) + (dy + dy) < dradius * dradius){
+                if ((dx * dx) + (dy * dy) < dradius * dradius){
                     enemiesInRange[i] = enemies[i];
                 }
             }
@@ -111,6 +111,7 @@ public class Tower implements Cloneable{
 
         return null;
     }
+    public abstract void towerAttack(int x, int y, EnemyMove enemy);
 
     protected Object clone(){
         try {
