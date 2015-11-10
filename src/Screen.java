@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Screen extends JPanel implements Runnable{
 
@@ -46,6 +48,7 @@ public class Screen extends JPanel implements Runnable{
     private Image buttonSpeedUpGame = new ImageIcon("res\\buttons\\speedButton.png").getImage();
     private Image buttonSpeedUpGame2x = new ImageIcon("res\\buttons\\speedButtonx2.png").getImage();
     private Image openscreen = new ImageIcon("res\\openscreen.jpg").getImage();
+    private Image gameover = new ImageIcon("res\\gameover.jpg").getImage();
 
     public EnemyMove[] enemyMap = new EnemyMove[50];
     public static Missile[] missiles = new  Missile[10];
@@ -229,10 +232,13 @@ public class Screen extends JPanel implements Runnable{
                 g.drawImage(Tower.towerList[hand - 1].texture, this.handXPos - (int)this.towerSize / 2,this.handYPos - (int)towerSize / 2, (int) this.towerSize, (int) this.towerSize, null);
             }
 
+        } else if(scene == 2){
+            g.drawImage(gameover,((this.frameWidth/2)-300),((this.frameHeight/2)-287),null);
+
         } else {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0+ frameHeightBorder, this.frameWidth, this.frameHeight);
-        }
+               }
 
         //FPS at the bottom!
         g.setColor(Color.BLACK);
@@ -256,6 +262,12 @@ public class Screen extends JPanel implements Runnable{
         }
 
         running = true;
+    }
+
+    public void endGame(){
+        this.scene = 2;
+       // new Reminder(5);
+
     }
 
 
@@ -315,7 +327,8 @@ public class Screen extends JPanel implements Runnable{
                 e.printStackTrace();
             }
         }
-        System.exit(0);
+        new Reminder(3);
+       // System.exit(0);
     }
 
     public void enemyUpdate(){
@@ -516,6 +529,7 @@ public class Screen extends JPanel implements Runnable{
 
     public class KeyTyped{
         public  void keyESC(){
+            endGame();
             running = false;
         }
 
@@ -525,6 +539,24 @@ public class Screen extends JPanel implements Runnable{
 
         public void keySPACE() {
             startGame(user, "level1");
+        }
+    }
+
+    public class Reminder {
+        Timer timer;
+
+        public Reminder(int seconds) {
+            timer = new Timer();
+            timer.schedule(new RemindTask(), seconds * 1000);
+        }
+
+        class RemindTask extends TimerTask {
+            public void run() {
+                //System.out.format("Time's up!%n");
+
+                timer.cancel(); //Terminate the timer thread
+                System.exit(0);
+            }
         }
     }
 
