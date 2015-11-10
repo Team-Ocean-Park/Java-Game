@@ -45,6 +45,7 @@ public class Screen extends JPanel implements Runnable{
     private Image buttonStartGame = new ImageIcon("res\\buttons\\startButton.png").getImage();
     private Image buttonSpeedUpGame = new ImageIcon("res\\buttons\\speedButton.png").getImage();
     private Image buttonSpeedUpGame2x = new ImageIcon("res\\buttons\\speedButtonx2.png").getImage();
+    private Image openscreen = new ImageIcon("res\\openscreen.jpg").getImage();
 
     public EnemyMove[] enemyMap = new EnemyMove[50];
     public static Missile[] missiles = new  Missile[10];
@@ -75,6 +76,7 @@ public class Screen extends JPanel implements Runnable{
         if (scene == 0){
             g.setColor(Color.BLUE);
             g.fillRect(0, 0 + frameHeightBorder, this.frameWidth, this.frameHeight);
+            g.drawImage(openscreen,((this.frameWidth/2)-161),((this.frameHeight/2)-78),null);
         } else if(scene == 1){
             //background
             g.setColor(Color.GREEN);
