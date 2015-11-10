@@ -44,7 +44,7 @@ public class Screen extends JPanel implements Runnable{
 
     private Image buttonStartGame = new ImageIcon("res\\buttons\\startButton.png").getImage();
     private Image buttonSpeedUpGame = new ImageIcon("res\\buttons\\speedButton.png").getImage();
-    private Image buttonSpeedUpGame2x = new ImageIcon("res\\buttons\\speedButton2x.png").getImage();
+    private Image buttonSpeedUpGame2x = new ImageIcon("res\\buttons\\speedButtonx2.png").getImage();
 
     public EnemyMove[] enemyMap = new EnemyMove[50];
     public static Missile[] missiles = new  Missile[10];
@@ -432,7 +432,7 @@ public class Screen extends JPanel implements Runnable{
 
             selectedTower = towerMap[xPos][yPos];
         }else{
-            if (xPos >= 24 && xPos <= 30 && yPos >= 1 && yPos <= 14){
+            if (xPos <= 24 && xPos >= 30 && yPos >= 1 && yPos <= 14){
                 selectedTower = null;
             }
         }
@@ -450,13 +450,11 @@ public class Screen extends JPanel implements Runnable{
             wave.nextWave();
         } else {
             if(speed == 1){
-                speed =4;
+                speed = 4;
             }else {
-                speed =1;
+                speed = 1;
             }
         }
-
-
     }
 
     public class MouseHeld{
