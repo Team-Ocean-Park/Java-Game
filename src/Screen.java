@@ -145,7 +145,7 @@ public class Screen extends JPanel implements Runnable{
             g.drawString("Health: " + user.player.health, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25 + frameHeightBorder);
 
             g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + ((this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
-            g.drawString("Money: " + user.player.money, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25 + (int) towerSize + frameHeightBorder);
+            g.drawString("Money: " + user.player.money, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25/2 + (int) towerSize + frameHeightBorder);
 
             g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + (((this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3) * 2) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
 
@@ -268,9 +268,6 @@ public class Screen extends JPanel implements Runnable{
         this.map = this.level.map;
 
         this.enemyAI = new EnemyAI(this.level);
-
-        System.out.println(this.enemyAI.route.getPointsWorth(2, 4));
-
 
         this.scene = 1; //level 1
         this.wave.waveNumber = 0;
@@ -449,7 +446,7 @@ public class Screen extends JPanel implements Runnable{
             }
         }
 
-        if (flag){
+        if (!flag){
             wave.nextWave();
         } else {
             if(speed == 1){
