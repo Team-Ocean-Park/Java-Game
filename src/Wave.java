@@ -9,6 +9,9 @@ public class Wave {
     int currentPoints;
     //int maxPoints;
 
+    int currentDalay=0;
+    int spawnRate=25;
+
     boolean waveSpawning;
 
     public Wave(Screen screen){
@@ -17,7 +20,7 @@ public class Wave {
 
     public void nextWave(){
         this.waveNumber++;
-       this.pointThisRound=this.waveNumber*10;
+        this.pointThisRound=this.waveNumber*25;
         this.currentPoints=0;
         this.waveSpawning=true;
 
@@ -29,15 +32,13 @@ public class Wave {
         }
     }
 
-    private int currentDalay=0;
-    private int spawnRate=75;
-
     public void spawnEnemies(){
         if(this.currentPoints<this.pointThisRound){
           if(currentDalay<spawnRate){
-              currentDalay++;
+              currentDalay+=Screen.speed;
           }else{
               currentDalay=0;
+
               System.out.println("[Wave]Enamy Spawned");
 
               int[] enemiesSpawnableID= new int[Enemy.enemyList.length] ;

@@ -27,10 +27,13 @@ public abstract class Tower implements Cloneable{
 
     public EnemyMove target;
 
-    public int FIRST = 1; //attack enemy nearest based
-    public int RANDOM = 2; //attack random enemy
+    public int RANDOM = 1; //attack enemy nearest based
+    public int FIRST = 2; //attack random enemy
+    public int LAST = 3; //attack enemy nearest based
+    public int STRONG = 4; //attack random enemy
 
-    public int attackStrategy = RANDOM;
+    //default attack strategy
+    public int attackStrategy = FIRST;
 
     public int maxAttackTime;
     public int maxAttackDelay;
@@ -86,16 +89,16 @@ public abstract class Tower implements Cloneable{
                 }
             }
         }
-        
-        if (this.attackStrategy == RANDOM){
-            int totalEnemies = 0;
 
-            for (int i = 0; i < enemiesInRange.length; i++) {
-                if (enemiesInRange[i] != null){
-                    totalEnemies++;
-                }
+        int totalEnemies = 0;
+
+        for (int i = 0; i < enemiesInRange.length; i++) {
+            if (enemiesInRange[i] != null){
+                totalEnemies++;
             }
+        }
 
+        if (this.attackStrategy == RANDOM){
             if (totalEnemies > 0){
                 int enemy = new Random().nextInt(totalEnemies);
                 int enemiesTaken = 0;
@@ -115,8 +118,32 @@ public abstract class Tower implements Cloneable{
             }
         }
 
+        if (this.attackStrategy == FIRST){
+            EnemyMove bestTarget = null;
+
+            for (int i = 0; i < enemiesInRange.length; i++) {
+                if (enemiesInRange[i] != null){
+                    if (bestTarget == null){
+                        bestTarget = enemiesInRange[i];
+                    } else {
+                        int b_x = bestTarget.routePosX;
+                        int b_y = bestTarget.routePosY;
+
+                        int b_points_worth = Screen.enemyAI.route.getPointsWorth(b_x, b_y);
+
+                        if (Screen.enemyAI.route.getPointsWorth(enemiesInRange[i].routePosX, enemiesInRange[i].routePosY) > b_points_worth) {
+                            bestTarget = enemiesInRange[i];
+                        } else if (Screen.enemyAI.route.getPointsWorth(enemiesInRange[i].routePosX, enemiesInRange[i].routePosY) == b_points_worth){
+                            System.out.println("[Tower] could not figure out if this tower is a better target than the last!");
+                        }
+                    }
+                }
+            }
+            return bestTarget;
+        }
         return null;
     }
+
     public abstract void towerAttack(int x, int y, EnemyMove enemy);
 
     protected Object clone(){

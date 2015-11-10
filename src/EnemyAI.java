@@ -21,9 +21,4 @@ public class EnemyAI {
     public EnemyAI(int id){
         this.id = id;
     }
-
-    public EnemyRoute getRoute(){
-        return route;
-    }
-
 }

@@ -41,26 +41,25 @@ public class EnemyAIMove extends EnemyAI {
             double yPos = enemy.yPos / Screen.towerSize;
 
             if (xPos > enemy.routePosX){
-                enemy.xPos -= enemy.enemy.speed;
+                enemy.xPos -= enemy.enemy.speed*Screen.speed;
                   if(enemy.xPos<enemy.routePosX*(int)Screen.towerSize){
                     enemy.xPos=enemy.routePosX*(int)Screen.towerSize;
                   }
             }
             if (xPos < enemy.routePosX){
-                enemy.xPos += enemy.enemy.speed;
+                enemy.xPos += enemy.enemy.speed*Screen.speed;
                 if(enemy.xPos>enemy.routePosX*(int)Screen.towerSize){
-                   // System.out.println("true");
                     enemy.xPos=enemy.routePosX*(int)Screen.towerSize;
                 }
             }
             if (yPos > enemy.routePosY){
-                enemy.yPos -= enemy.enemy.speed;
+                enemy.yPos -= enemy.enemy.speed*Screen.speed;
                 if(enemy.yPos<enemy.routePosY*(int)Screen.towerSize){
                     enemy.yPos=enemy.routePosY*(int)Screen.towerSize;
                 }
             }
             if (yPos < enemy.routePosY){
-                enemy.yPos += enemy.enemy.speed;
+                enemy.yPos += enemy.enemy.speed*Screen.speed;
                 if(enemy.yPos>enemy.routePosY*(int)Screen.towerSize){
                     enemy.yPos=enemy.routePosY*(int)Screen.towerSize;
                 }

@@ -10,6 +10,8 @@ public class EnemyMove {
 
     int health;
 
+    int id;
+
     boolean attack;
 
     public EnemyMove( Enemy enemy,SpawnPoint spawnPoint ){
@@ -21,6 +23,8 @@ public class EnemyMove {
         this.xPos = spawnPoint.getX() * (int)Screen.towerSize;
         this.yPos = spawnPoint.getY() * (int)Screen.towerSize;
 
+        this.id = enemy.id;
+
         this.attack = false;
         this.health = enemy.health;
     }
@@ -31,6 +35,7 @@ public class EnemyMove {
         if(currentEnemy.health<=0){
             return null;
         }
+
         return currentEnemy;
     }
 

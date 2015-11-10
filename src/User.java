@@ -4,8 +4,8 @@ public class User {
 
     Player player;
 
-    int startingMoney = 300;
-    int startingHealth = 100;
+    int startingMoney = 25;
+    int startingHealth = 50;
 
     public User(Screen screen) {
         this.screen = screen;
