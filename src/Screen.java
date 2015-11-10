@@ -32,7 +32,7 @@ public class Screen extends JPanel implements Runnable{
     public int frameWidth;
     public int frameHeight;
 
-    public int frameHeightBorder;
+    public static int frameHeightBorder;
 
     public Tower selectedTower;
 
@@ -82,6 +82,24 @@ public class Screen extends JPanel implements Runnable{
                     g.drawRect((int) ((int) towerSize + (x * towerSize)), (int) ((int)towerSize + ( y * towerSize))  + frameHeightBorder, (int) towerSize, (int) towerSize);
                 }
             }
+            //Upgrade Menu
+            g.setColor(Color.GRAY);
+            g.drawRect((int)towerSize * 24, (int)towerSize + frameHeightBorder, (int)towerSize * 7, (int)towerSize * 14);
+            g.drawRect((int)towerSize * 24 + (int)towerSize/2 - 1, (int)towerSize + frameHeightBorder + (int)towerSize / 2 - 1,(int)towerSize * 3 + 2, (int)towerSize*3 + 2);
+            if(selectedTower != null){
+                g.drawImage(selectedTower.texture, (int)towerSize * 24 + (int)towerSize/2, (int)towerSize + frameHeightBorder + (int)towerSize/2, (int)towerSize * 3, (int)towerSize * 3, null);
+            }
+
+            //Tower Description
+               g.drawRect((int)towerSize * 28,(int)towerSize + (((int)towerSize * 5/2 + 2) / 3) * 0 + frameHeightBorder + (int)towerSize * 2 / 4 - 1, frame.getWidth() - (int)towerSize * 29 - (int)towerSize/2, ((int)towerSize * 5/2 + 2) / 3);
+               g.drawRect((int)towerSize * 28,(int)towerSize + (((int)towerSize * 5/2 + 2) / 3) * 1 + frameHeightBorder + (int)towerSize * 3 / 4 - 1, frame.getWidth() - (int)towerSize * 29 - (int)towerSize/2, ((int)towerSize * 5/2 + 2) / 3);
+               g.drawRect((int)towerSize * 28,(int)towerSize + (((int)towerSize * 5/2 + 2) / 3) * 2 + frameHeightBorder + (int)towerSize * 4 / 4 - 1, frame.getWidth() - (int)towerSize * 29 - (int)towerSize/2, ((int)towerSize * 5/2 + 2) / 3);
+
+            //Tower Strategy
+               g.drawRect((int)towerSize * 24 + (int)towerSize/2 - 1 + 0 *(((int)towerSize * 9/2) / 4 + (int)towerSize/2), (int)towerSize * 5 + frameHeightBorder, ((int)towerSize * 9/2) / 4, ((int)towerSize * 5/2 + 2)/3);
+               g.drawRect((int)towerSize * 24 + (int)towerSize/2 - 1 + 1 *(((int)towerSize * 9/2) / 4 + (int)towerSize/2), (int)towerSize * 5 + frameHeightBorder, ((int)towerSize * 9/2) / 4, ((int)towerSize * 5/2 + 2)/3);
+               g.drawRect((int)towerSize * 24 + (int)towerSize/2 - 1 + 2 *(((int)towerSize * 9/2) / 4 + (int)towerSize/2), (int)towerSize * 5 + frameHeightBorder, ((int)towerSize * 9/2) / 4, ((int)towerSize * 5/2 + 2)/3);
+               g.drawRect((int)towerSize * 24 + (int)towerSize/2 - 1 + 3 *(((int)towerSize * 9/2) / 4 + (int)towerSize/2), (int)towerSize * 5 + frameHeightBorder, ((int)towerSize * 9/2) / 4, ((int)towerSize * 5/2 + 2)/3);
 
             //Enemies
             for (int i = 0; i <enemyMap.length; i++) {
@@ -154,10 +172,11 @@ public class Screen extends JPanel implements Runnable{
 
             //Missiles
             Graphics2D g2d = (Graphics2D)g;
+
             for (int i = 0; i < missiles.length; i++) {
                 if (missiles[i] != null) {
-                    g2d.rotate(missiles[i].direction + Math.toRadians(90), (int)missiles[i].x + (int)towerSize + (int)towerSize/2, (int)missiles[i].y + (int)towerSize + (int)towerSize /2 + frameHeightBorder);
-                    g.drawImage(missiles[i].texture, (int)missiles[i].x + (int)towerSize + (int)towerSize / 2, (int)missiles[i].y + (int)towerSize + (int)towerSize / 2 + frameHeightBorder, (int)(14 * towerSize / 50), (int)(30 * towerSize / 50), null);
+                    g2d.rotate(missiles[i].direction + Math.toRadians(90), (int)missiles[i].x + (int)towerSize + (int)towerSize/2, (int)missiles[i].y + (int)towerSize + (int)towerSize / 2+ frameHeightBorder);
+                    g.drawImage(missiles[i].texture, (int)missiles[i].x + (int)towerSize + (int)towerSize / 2, (int)missiles[i].y + (int)towerSize + (int)towerSize / 2 + frameHeightBorder, 14, 30, null);
                     g2d.rotate(-missiles[i].direction + Math.toRadians(-90), (int)missiles[i].x + (int)towerSize + (int)towerSize /2,(int)missiles[i].y + (int)towerSize + (int)towerSize / 2 + frameHeightBorder);
                 }
             }
@@ -354,6 +373,19 @@ public class Screen extends JPanel implements Runnable{
             }
         }
     }
+    public void  selectTower(int x, int y){
+        int xPos = x / (int) towerSize;
+        int yPos = y / (int) towerSize;
+
+        if (xPos > 0 && xPos <= 22 && yPos <= 14 && yPos > 0) {
+            xPos -= 1;
+            yPos -= 1;
+
+            selectedTower = towerMap[xPos][yPos];
+        }else{
+            selectedTower = null;
+        }
+    }
 
     public class MouseHeld{
         boolean mouseDown = false;
@@ -395,6 +427,8 @@ public class Screen extends JPanel implements Runnable{
             if (hand != 0){
                 placeTower(e.getXOnScreen(), e.getYOnScreen()- frameHeightBorder);
                 hand = 0;
+            }else{
+                selectTower(e.getX(), e.getY() - frameHeightBorder);
             }
 
             updateMouse(e);

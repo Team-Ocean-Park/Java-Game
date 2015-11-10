@@ -38,8 +38,8 @@ public class Missile {
     }
 
     public void checkTarget() {
-        int deltaX = (int) (Screen.towerSize*2 + this.target.xPos - Screen.towerSize/2 - this.x - 7);
-        int deltaY = (int) (Screen.towerSize*3 + this.target.yPos - Screen.towerSize/2 - this.y - 15);
+        int deltaX = (int) (this.target.xPos - this.x - 7);
+        int deltaY = (int) (this.target.yPos - this.y - 15);
 
         int deltaRadius = 2 + 2;
 
@@ -51,7 +51,7 @@ public class Missile {
     }
 
     public void updateDirection() {
-        this.direction = Math.atan2(Screen.towerSize*3 + this.target.yPos - Screen.towerSize/2 - this.y - 15,
-                                    Screen.towerSize*2 + this.target.xPos - Screen.towerSize/2 - this.x - 7);
+        this.direction = Math.atan2(this.target.yPos - this.y - 15,
+                                    this.target.xPos - this.x - 7);
     }
 }

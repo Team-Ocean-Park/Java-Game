@@ -7,7 +7,7 @@ public abstract class Tower implements Cloneable{
     public String textureFile = "";
     public Image texture = null;
 
-    public static final Tower[] towerList = new Tower[200];
+    public static final Tower[] towerList = new Tower[36];
 
     //public static Tower lightningTower = new TowerLightning(0, 10, 2, 4D, 1D).getTextureFile("lightningTower.png");
     public static final Tower lightningTowerYellow = new TowerLightning(0, 10, 2, 4, 6, 9).getTextureFile("res\\tower\\lightningTower1.jpg");
