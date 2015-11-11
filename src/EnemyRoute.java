@@ -46,7 +46,7 @@ public class EnemyRoute {
                         yPos--;
 
                         break;
-                    }else if(level.map[xPos][yPos - 1] == baseBlock){
+                    } else if(level.map[xPos][yPos - 1] == baseBlock){
                         base = new Base(xPos, yPos);
                         break;
                     }
@@ -78,7 +78,7 @@ public class EnemyRoute {
                         xPos++;
 
                         break;
-                    }else if(level.map[xPos - 1][yPos] == baseBlock){
+                    } else if(level.map[xPos - 1][yPos] == baseBlock){
                         base = new Base(xPos, yPos);
                         break;
                     }
@@ -95,7 +95,7 @@ public class EnemyRoute {
                         yPos++;
 
                         break;
-                    }else if(level.map[xPos][yPos + 1] == baseBlock){
+                    } else if(level.map[xPos][yPos + 1] == baseBlock){
                         base = new Base(xPos, yPos);
                         break;
                     }

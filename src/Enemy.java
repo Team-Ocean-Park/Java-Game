@@ -31,12 +31,11 @@ public class Enemy {
 
             this.id = id;
             this.price = price;
-            this.damage =damage;
+            this.damage = damage;
             this.health = health;
-            this.points =points;
+            this.points = points;
             this.speed = speed * Screen.towerSize / 50;
             this.attackSpeed = attackSpeed;
-
         }
     }
 

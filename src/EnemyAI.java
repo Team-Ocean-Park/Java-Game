@@ -12,7 +12,7 @@ public class EnemyAI {
     public EnemyAI(Levels level){
         route = new EnemyRoute(level);
 
-        basePosX =route.base.xPos;
+        basePosX = route.base.xPos;
         basePosY = route.base.yPos;
 
         moveAI = new EnemyAIMove(0);

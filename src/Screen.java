@@ -238,7 +238,7 @@ public class Screen extends JPanel implements Runnable{
         } else {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0+ frameHeightBorder, this.frameWidth, this.frameHeight);
-               }
+        }
 
         //FPS at the bottom!
         g.setColor(Color.BLACK);
@@ -266,7 +266,7 @@ public class Screen extends JPanel implements Runnable{
 
     public void endGame(){
         this.scene = 2;
-       // new Reminder(5);
+        //new Reminder(5);
 
     }
 
@@ -279,6 +279,7 @@ public class Screen extends JPanel implements Runnable{
 
         this.level = levelFile.getLevel(level);
         this.level.findSpawnPoint();
+        this.level.findEndPoint();
         this.map = this.level.map;
 
         this.enemyAI = new EnemyAI(this.level);
@@ -344,6 +345,8 @@ public class Screen extends JPanel implements Runnable{
 
                 if (enemyMap[i] == null){
                     user.player.money += moneyEarnedOfDead;
+                } else if (enemyMap[i].isEnemyFinished) {
+                        user.player.health -= 1;
                 }
             }
         }
@@ -413,7 +416,7 @@ public class Screen extends JPanel implements Runnable{
     public  void spawnEnemy(int enemyID){
         for (int i = 0; i < enemyMap.length; i++) {
             if(enemyMap[i] == null){
-                enemyMap[i] = new EnemyMove(Enemy.enemyList[enemyID], level.spawnPoint);
+                enemyMap[i] = new EnemyMove(Enemy.enemyList[enemyID], level.spawnPoint, level.endPoint);
                 break;
             }
         }
