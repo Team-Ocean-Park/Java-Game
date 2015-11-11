@@ -5,7 +5,7 @@ public class User {
     Player player;
 
     int startingMoney = 25;
-    int startingHealth = 50;
+    int startingHealth = 250;
 
     public User(Screen screen) {
         this.screen = screen;

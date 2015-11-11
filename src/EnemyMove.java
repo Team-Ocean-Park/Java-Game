@@ -41,14 +41,15 @@ public class EnemyMove {
     public EnemyMove update(){
         EnemyMove currentEnemy = this;
 
-        if(currentEnemy.routePosX == currentEnemy.finishedEnemyPosX  - 1 &&
+        if(currentEnemy.routePosX == currentEnemy.finishedEnemyPosX  - 2 &&
                 currentEnemy.routePosY == currentEnemy.finishedEnemyPosY) {
             currentEnemy.isEnemyFinished = true;
         } else {
             currentEnemy.isEnemyFinished = false;
         }
 
-        if(currentEnemy.health<=0){
+        if((currentEnemy.health<=0) || (currentEnemy.routePosX == currentEnemy.finishedEnemyPosX - 1&&
+                currentEnemy.routePosY == currentEnemy.finishedEnemyPosY)) {
             return null;
         }
 
