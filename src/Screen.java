@@ -79,7 +79,7 @@ public class Screen extends JPanel implements Runnable{
         if (scene == 0){
             g.setColor(Color.BLUE);
             g.fillRect(0, 0 + frameHeightBorder, this.frameWidth, this.frameHeight);
-            g.drawImage(openscreen,((this.frameWidth/2)-161),((this.frameHeight/2)-78),null);
+            g.drawImage(openscreen, 0, 0, getWidth(), getHeight(), this);
         } else if(scene == 1){
             //background
             g.setColor(Color.GREEN);
