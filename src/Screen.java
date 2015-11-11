@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
+import java.io.Console;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,6 +50,7 @@ public class Screen extends JPanel implements Runnable{
     private Image buttonSpeedUpGame2x = new ImageIcon("res\\buttons\\speedButtonx2.png").getImage();
     private Image openscreen = new ImageIcon("res\\openscreen.jpg").getImage();
     private Image gameover = new ImageIcon("res\\gameover.jpg").getImage();
+    private Image pauseScreen = new ImageIcon("res\\pauseScreen.jpg").getImage();
 
     public EnemyMove[] enemyMap = new EnemyMove[50];
     public static Missile[] missiles = new  Missile[10];
@@ -287,7 +289,9 @@ public class Screen extends JPanel implements Runnable{
         this.scene = 1; //level 1
         this.wave.waveNumber = 0;
     }
+
     int frames = 0;
+
     public void run(){
         long lastFrame = System.currentTimeMillis();
         int synchronised_fps = 0;
@@ -296,7 +300,6 @@ public class Screen extends JPanel implements Runnable{
 
         while (running){
             repaint();
-
 
             if (System.currentTimeMillis() - 1000 >= lastFrame){
                 fps = frames;
@@ -312,6 +315,10 @@ public class Screen extends JPanel implements Runnable{
             if (timeMilliSec > synchronised_fps * 1000 / 25 ){
                 synchronised_fps++;
                 update();
+                if (isGameOver){
+                    endGame();
+                    running = false;
+                }
 
                 if (synchronised_fps == 1000/25){
                     synchronised_fps = 0;
@@ -332,6 +339,15 @@ public class Screen extends JPanel implements Runnable{
        // System.exit(0);
     }
 
+    private boolean gamePaused = false;
+    private void pauseGame(boolean gamePaused) {
+        if (gamePaused){
+            Graphics g = null;
+            g.drawImage(pauseScreen, ((this.frameWidth / 2) - 300), ((this.frameHeight / 2) - 287), null);
+        }
+    }
+
+    private boolean isGameOver = false;
     public void enemyUpdate(){
         for (int i = 0; i < enemyMap.length; i++) {
             if (enemyMap[i] != null){
@@ -349,6 +365,10 @@ public class Screen extends JPanel implements Runnable{
                     } else if (enemyMap[i].isKilled) {
                         user.player.money += moneyEarnedOfDead;
                         enemyMap[i] = null;
+                    }
+
+                    if (user.player.health == 0 || user.player.health < 0){
+                        isGameOver = true;
                     }
                 }
 
@@ -444,6 +464,7 @@ public class Screen extends JPanel implements Runnable{
             }
         }
     }
+
     public void  selectTower(int x, int y){
         int xPos = x / (int) towerSize;
         int yPos = y / (int) towerSize;
@@ -547,6 +568,12 @@ public class Screen extends JPanel implements Runnable{
         public void keySPACE() {
             startGame(user, "level1");
         }
+
+        public void keyPAUSE()
+        {
+            gamePaused = true;
+            //pauseGame(gamePaused);
+        }
     }
 
     public class Reminder {
@@ -560,7 +587,6 @@ public class Screen extends JPanel implements Runnable{
         class RemindTask extends TimerTask {
             public void run() {
                 //System.out.format("Time's up!%n");
-
                 timer.cancel(); //Terminate the timer thread
                 System.exit(0);
             }

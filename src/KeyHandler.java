@@ -33,6 +33,10 @@ public class KeyHandler implements KeyListener {
         if(keyCode == KeyEvent.VK_ENTER){
             this.keyTyped.keyEnter();
         }
+
+        if(keyCode == KeyEvent.VK_PAUSE){
+            this.keyTyped.keyPAUSE();
+        }
     }
 
     @Override
