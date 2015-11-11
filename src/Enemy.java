@@ -5,11 +5,10 @@ public class Enemy {
 
     public static final Enemy[]enemyList = new Enemy[10];
 
-    public static final Enemy slimeYellow = new EnemySlime(0, 5 , 2 ,4 , 1,3 , 5).getTextureFile("EnemySlime.png");
-    public static final Enemy slimeGreen = new EnemySlime(1, 5 , 5 ,10, 2 ,2 , 5).getTextureFile("EnemySlime2.png");
-    public static final Enemy slimeBlue = new EnemySlime(2, 5 , 10 ,17, 5 ,1 , 6).getTextureFile("EnemySlime3.png");
-    public static final Enemy slimeink = new EnemySlime(3, 5 , 20 ,15, 10 ,1 , 7).getTextureFile("EnemySlime4.png");
-
+    public static final Enemy slimeYellow = new EnemySlime(0, 5 , 2 ,1 , 1,3 , 5).getTextureFile("EnemySlime.png");
+    public static final Enemy slimeGreen = new EnemySlime(1, 5 , 5 ,2, 2 ,2 , 5).getTextureFile("EnemySlime2.png");
+    public static final Enemy slimeBlue = new EnemySlime(2, 5 , 10 ,5, 5 ,1 , 6).getTextureFile("EnemySlime3.png");
+    public static final Enemy slimeink = new EnemySlime(3, 5 , 20 ,10, 10 ,1 , 7).getTextureFile("EnemySlime4.png");
     public String textureFile = "";
     public Image texture = null;
 

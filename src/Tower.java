@@ -10,12 +10,11 @@ public abstract class Tower implements Cloneable{
     public static final Tower[] towerList = new Tower[36];
 
     //public static Tower lightningTower = new TowerLightning(0, 10, 2, 4D, 1D).getTextureFile("lightningTower.png");
-    public static final Tower lightningTowerYellow = new TowerLightning(0, 10, 2, 4, 6, 9).getTextureFile("res\\tower\\lightningTower1.jpg");
-    public static final Tower lightningTowerGreen = new TowerLightning(1, 25, 3, 6, 6, 15).getTextureFile("res\\tower\\lightningTower2.jpg");
+    public static final Tower lightningTowerYellow = new TowerLightning(0, 10, 2, 2, 6, 9).getTextureFile("res\\tower\\lightningTower1.jpg");
+    public static final Tower lightningTowerGreen = new TowerLightning(1, 25, 3, 4, 6, 15).getTextureFile("res\\tower\\lightningTower2.jpg");
     public static final Tower lightningTowerBlue = new TowerLightning(2, 50, 3, 6, 6, 12).getTextureFile("res\\tower\\lightningTower3.jpg");
-    public static final Tower lightningTowerPink = new TowerLightning(3, 75, 4, 10, 9, 21).getTextureFile("res\\tower\\lightningTower4.jpg");
-    public static final Tower missileTower = new TowerMissile(4, 10, 2, 3, 0, 17).getTextureFile("res\\tower\\missileTower.jpg");
-
+    public static final Tower lightningTowerPink = new TowerLightning(3, 75, 8, 10, 9, 21).getTextureFile("res\\tower\\lightningTower4.jpg");
+    public static final Tower missileTower = new TowerMissile(4, 100, 2, 10, 0, 17).getTextureFile("res\\tower\\missileTower.jpg");
     public int id;
     public int cost;
     public int range;
