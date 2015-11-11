@@ -147,10 +147,10 @@ public class Screen extends JPanel implements Runnable{
 
             //health and money + levelNumber
             g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
-            g.drawString("Health: " + user.player.health, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25 + frameHeightBorder);
+            g.drawString("Health: " + (Math.round(user.player.health)), (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25 + frameHeightBorder);
 
             g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + ((this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
-            g.drawString("Money: " + user.player.money, (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25/2 + (int) towerSize + frameHeightBorder);
+            g.drawString("Money: " + (Math.round(user.player.money)), (int)(12* towerSize / 25) + 25, (15*(int) towerSize) + (int)(12* towerSize / 25) + 25/2 + (int) towerSize + frameHeightBorder);
 
             g.drawRect((int)(12* towerSize / 25), (15*(int) towerSize) + (int)(12* towerSize / 25) + (((this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3) * 2) + frameHeightBorder, (int)(frameWidth / 11.52), (this.frameHeight - (15*(int) towerSize) - (int)(12* towerSize / 25) - (int)(12* towerSize / 25))/3);
 
@@ -343,11 +343,15 @@ public class Screen extends JPanel implements Runnable{
 
                 enemyMap[i] = enemyMap[i].update();
 
-                if (enemyMap[i] == null){
-                    user.player.money += moneyEarnedOfDead;
-                } else if (enemyMap[i].isEnemyFinished) {
-                        user.player.health -= 1;
+                if (enemyMap[i] != null) {
+                    if (enemyMap[i].isEnemyFinished) {
+                        user.player.health -= 0.2;
+                    } else if (enemyMap[i].isKilled) {
+                        user.player.money += moneyEarnedOfDead;
+                        enemyMap[i] = null;
+                    }
                 }
+
             }
         }
     }

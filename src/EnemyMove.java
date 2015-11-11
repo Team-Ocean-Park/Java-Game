@@ -17,6 +17,7 @@ public class EnemyMove {
 
     boolean attack;
     boolean isEnemyFinished;
+    boolean isKilled;
 
     public EnemyMove( Enemy enemy,SpawnPoint spawnPoint, EndPoint endPoint ){
         this.enemy = enemy;
@@ -48,7 +49,13 @@ public class EnemyMove {
             currentEnemy.isEnemyFinished = false;
         }
 
-        if((currentEnemy.health<=0) || (currentEnemy.routePosX == currentEnemy.finishedEnemyPosX - 1&&
+        if(currentEnemy.health <= 0) {
+            currentEnemy.isKilled = true;
+        } else {
+            currentEnemy.isKilled = false;
+        }
+
+        if((currentEnemy.routePosX == currentEnemy.finishedEnemyPosX - 1&&
                 currentEnemy.routePosY == currentEnemy.finishedEnemyPosY)) {
             return null;
         }

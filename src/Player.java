@@ -1,7 +1,7 @@
 public class Player {
 
-    int health;
-    int money;
+    double health;
+    double money;
 
     public Player(User user){
         this.money = user.startingMoney;
